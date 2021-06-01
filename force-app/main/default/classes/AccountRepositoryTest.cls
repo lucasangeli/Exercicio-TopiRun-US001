@@ -1,16 +1,10 @@
-/**
-* @author Henrique Nitatori - Topi
-*/
 @isTest
 public class AccountRepositoryTest {
-
     @isTest
-    static void givenCreateWhenCreateAccountThenExpectedListOfAccount() {
+    static void createAccountWhenPassedInfo(){
         List<Account> accounts = new List<Account>{
-            AccountFixeFactory.createAccount(),
             AccountFixeFactory.createAccount()
         };
-        System.assertEquals(accounts.size(), 2);
-
+        System.assertEquals(accounts.size(), 1);
     }
 }

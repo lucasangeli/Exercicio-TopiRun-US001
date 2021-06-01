@@ -1,34 +1,20 @@
-/**
-* @author Henrique Nitatori - Topi
-*/
 public class CreateEventByAccountCategory {
-    Account account;
-    PresentationSchedule presentationSchedule;
+  Account account;
+  PremiumCategoryOneMillion premiumAccount;
+  PremiumCategoryLessOneMillion notSoPremiumAccount;
+  StandardAccountCategory standardAccount;
 
-    public CreateEventByAccountCategory(Account account) {
-        this.account = account;
-        this.presentationSchedule = new PresentationSchedule();
+  public CreateEventByAccountCategory(Account account){
+      this.account = account;
+  }
+
+  public void createEvent(){
+    if(Account.AnnualRevenue > 1000000 && Account.Category__c == 'Premium'){
+        premiumAccount = new PremiumCategoryOneMillion(account);
+    } if(Account.AnnualRevenue < 1000000 && Account.Category__c == 'Premium'){
+        notSoPremiumAccount = new PremiumCategoryLessOneMillion(account);
+    } else {
+        standardAccount = new StandardAccountCategory(account);
     }
-
-    public Event createEvent() {
-        switch on account.category__c {
-            when 'Premium' {
-                Event event;
-                if(account.annualRevenue > 100000000) {
-                    event = presentationSchedule.schedule( new PremiumCategoryOneMillion( account ) );
-                }
-                if(account.annualRevenue < 100000000) {
-                    event = presentationSchedule.schedule( new PremiumCategoryLessOneMillion( account ) );
-                }
-                return event;
-            }
-            when 'Standard' {
-                return presentationSchedule.schedule( new StandardAccountCategory( account ) );
-            }
-            when else {
-                return null;
-            }
-        }
-    }
-
+  }
 }
